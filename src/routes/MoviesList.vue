@@ -55,11 +55,7 @@ export default {
     }
   },
   created() {
-    if (this.$route.query.keyword) {
-      this.$store.commit('movies/changeKeyword', this.$route.query.keyword)
-    } else {
-      this.$store.dispatch('movies/searchMovies', this.keyword)
-    }
+    this.init()
 
     window.addEventListener('scroll', () => {
       const isScrollEnded = (window.innerHeight + window.scrollY) + 600 >= document.body.offsetHeight
@@ -74,6 +70,22 @@ export default {
       if (!this.$store.getters['movies/loading']) {
         this.$store.commit('movies/changePage', this.$store.state.movies.page + 1)
         this.$store.dispatch('movies/fetchMoreMovies', this.keyword)
+      }
+    },
+    async init() {
+      if (this.$route.query.keyword) {
+        await this.$store.commit('movies/changeKeyword', this.$route.query.keyword)
+      } else {
+        await this.$store.dispatch('movies/searchMovies', this.keyword)
+      }
+
+      if (this.$route.fullPath === '/') {
+        this.$router.push({
+          name: 'MoviesList',
+          query: {
+            keyword: this.$store.getters['movies/initKeyword']
+          }
+        })
       }
     }
   }
