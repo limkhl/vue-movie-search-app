@@ -47,7 +47,7 @@ export default {
     async searchMovies({ state, commit, dispatch }, payload) {
       commit('changePage', 1)
       const { Search, totalResults } = await dispatch('_request', {
-        url: `&s=${payload}&page=${state.page}`
+        url: `&s=${payload.keyword}&page=${state.page}`
       })
       commit('assignState', {
         movies: Search,
@@ -64,26 +64,22 @@ export default {
     },
     async fetchMoreMovies({ state, commit, dispatch }, payload) {
       const { Search } = await dispatch('_request', {
-        url: `&s=${payload}&page=${state.page}`
+        url: `&s=${payload.keyword}&page=${state.page}`
       })
       commit('assignState', {
         movies: [...state.movies, ...Search]
       })
     },
-    async _request({ commit }, payload) {
+    async _request({ commit }, options) {
       commit('startLoading')
-      try {
-        // eslint-disable-next-line no-undef
-        const res = await fetch(`${API_ENDPOINT}${payload.url}`)
-        if (!res.ok) {
-          throw new Error('API 호출 에러')
-        }
-        return await res.json()
-      } catch (e) {
-        console.log(e.message)
-      } finally {
+      return await fetch('/.netlify/functions/movies', {
+        method: 'POST',
+        body: JSON.stringify(options),
+      })
+      .then(res => res.json())
+      .finally(() => {
         commit('endLoading')
-      }
+      })
     }
   }
 }

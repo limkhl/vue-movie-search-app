@@ -56,7 +56,7 @@ export default {
       if(this.$route.name === 'DetailPage') {
         this.$router.push('/')
       } else {
-        this.$store.dispatch('movies/searchMovies', this.keyword)
+        this.$store.dispatch('movies/searchMovies', { keyword: this.keyword })
       }
     }
   },
