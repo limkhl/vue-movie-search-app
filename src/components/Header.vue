@@ -11,7 +11,8 @@
       </a>
     </h1>
     <button
-      v-if="$route.name === 'DetailPage'"
+      v-show="$route.name === 'DetailPage'"
+      v-cloak
       title="뒤로 가기"
       class="btn--back"
       @click="$router.push({
@@ -20,9 +21,9 @@
           keyword: $route.query.keyword
         }
       })">
-      <span class="material-icons">
-        arrow_back
-      </span>
+      <img
+        src="../../static/icon-back.png"
+        alt="뒤로 가기" />
     </button>
     <form @submit.prevent>
       <input
@@ -133,17 +134,21 @@ header {
   }
 
   .btn--back {
-    color: black;
     background-color: transparent;
-    border-radius: 50%;
     border: none;
     cursor: pointer;
-    font-weight: bold;
     transition: all 0.2s;
 
     &:hover {
-      color: $color-primary;
       transform: scale(1.2);
+    }
+
+    img {
+      width: 36px;
+    }
+
+    [v-cloak] {
+      display: none;
     }
   }
 
