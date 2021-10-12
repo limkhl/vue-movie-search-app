@@ -7,6 +7,9 @@
       :key="movie.imdbID"
       :movie="movie"
       :keyword="keyword" />
+    <MoviesItem
+      v-show="hasMoreItem"
+      class="skeleton" />
   </ul>
 </template>
 
@@ -34,18 +37,23 @@ export default {
     },
     totalResults() {
       return this.$store.state.movies.totalResults
+    },
+    hasMoreItem() {
+      return this.movies && this.movies.length && this.movies.length < this.totalResults
     }
   },
   created() {
-    if (this.$route.query.keyword) {
-      this.$store.commit('movies/changeKeyword', this.$route.query.keyword)
-    } else {
-      this.$store.dispatch('movies/searchMovies', { keyword: this.keyword })
-    }
-
+    this.firstSearch()
     this.checkTimingForInfinityScroll()
   },
   methods: {
+    firstSearch() {
+      if (this.$route.query.keyword) {
+        this.$store.commit('movies/changeKeyword', this.$route.query.keyword)
+      } else {
+        this.$store.dispatch('movies/searchMovies', { keyword: this.keyword })
+      }
+    },
     infinityScroll() {
       if (!this.$store.getters['movies/loading']) {
         this.$store.commit('movies/changePage', this.$store.state.movies.page + 1)

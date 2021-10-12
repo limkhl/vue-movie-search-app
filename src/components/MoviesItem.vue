@@ -12,17 +12,17 @@
       }
     })">
     <div
-      class="item__thumbnail">
+      class="item__thumbnail skeleton-element">
       <img
         class="item__img"
         :src="imgPath"
         :alt="movie.Title" />
     </div>
     <div class="item__description">
-      <div class="item__title">
+      <div class="item__title skeleton-element">
         {{ movie.Title }}
       </div>
-      <div class="item__year">
+      <div class="item__year skeleton-element">
         {{ movie.Year }}
       </div>
     </div>
@@ -62,14 +62,6 @@ export default {
     .item__title {
       color: $color-primary;
     }
-
-    .item__thumbnail::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
   }
 
   &__thumbnail {
@@ -96,6 +88,63 @@ export default {
     font-weight: bold;
     line-height: 1.2;
     margin-bottom: 5px;
+  }
+}
+
+.item.skeleton {
+  .item {
+    &__thumbnail::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: lightgray;
+    }
+
+    &__description {
+      div {
+        background-color: rgba(lightgray, 0.5);
+        border-radius: 5px;
+      }
+    }
+
+    &__title {
+      height: 50px;
+    }
+
+    &__year {
+      height: 20px;
+      width: 20%;
+    }
+  }
+
+  div.skeleton-element {
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: skew(5deg);
+      animation: shine infinite 1.5s ease-in-out;
+    }
+  }
+
+  @keyframes shine {
+    from {
+      transform: skew(45deg) translateX(0%);
+    }
+    to{
+      transform: skew(45deg) translateX(200%);
+    }
   }
 }
 </style>
