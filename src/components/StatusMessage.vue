@@ -4,7 +4,7 @@
     class="guide">
     <div
       v-show="isInit">
-      추천 검색어 <span>" {{ initKeyword }} "</span> (으)로 찾은 결과입니다.
+      추천 검색어 <span>" {{ initKeyword }} "</span> (으)로 {{ totalResults }}건의 결과를 찾았습니다.
     </div>
     <div
       v-show="!isInit && isTyping && !isEmpty">

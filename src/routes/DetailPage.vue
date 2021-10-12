@@ -3,7 +3,7 @@
     영화 상세 페이지
   </h2>
   <section
-    v-show="!loading"
+    v-show="!isLoading"
     v-cloak
     :key="$route.params.id"
     class="container">
@@ -62,7 +62,7 @@ export default {
     detail() {
       return this.$store.state.movies.detail
     },
-    loading() {
+    isLoading() {
       return this.$store.getters['movies/loading']
     },
     imgPath() {

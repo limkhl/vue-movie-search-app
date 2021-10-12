@@ -6,7 +6,7 @@ export default {
       detail: {},
       isInit: true,
       keyword: null,
-      suggestKeywords: ['moonlight', 'hidden', 'd\'Amélie', 'harold', 'vertigo', 'billboards', 'daniel', 'arrival', 'ghostbusters', 'spy', 'lady', 'killing', 'you were', 'roma', 'favourite', 'high life', 'the half'],
+      suggestKeywords: ['moonlight', 'hidden', 'harold', 'vertigo', 'billboards', 'daniel', 'arrival', 'ghostbusters', 'spy', 'lady', 'killing', 'you were', 'roma', 'favourite', 'high life', 'the half'],
       loadings: [],
       imgNotFound: 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg',
       page: 1,
