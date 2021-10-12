@@ -32,7 +32,7 @@
         placeholder="영화 제목을 입력해주세요. (영어만 검색 가능)"
         type="text"
         autocomplete="off"
-        @input="[changeKeyword($event.target.value), changeTypingMode(true)]" />
+        @input="[changeKeyword($event.target.value), changeTypingMode(true), scrollToTop()]" />
     </form>
   </header>
 </template>
@@ -98,6 +98,9 @@ export default {
           !this.hasKorean && this.$store.dispatch('movies/searchMovies', { keyword: this.keyword })
         }
       }, 1000)
+    },
+    scrollToTop() {
+      window.scrollTo(0, 0)
     }
   }
 }
