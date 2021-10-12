@@ -100,7 +100,8 @@ export default {
 
 .detail-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 
   .title {
     font-size: 18px;
@@ -115,12 +116,8 @@ export default {
   &__item {
     padding: 15px;
 
-    &.Title, &.Plot {
-      grid-column: auto / span 4;
-    }
-
-    &.Actors {
-      grid-column: auto / span 3;
+    &.Title, &.Plot, &.Actors {
+      grid-column: 1 / -1;
     }
 
     &.Title .content {
@@ -132,43 +129,6 @@ export default {
 
   span {
     display: block;
-  }
-
-  /* Media Query */
-  @include grid-large {
-    & {
-      grid-template-columns: repeat(3, 1fr);
-
-      &__item {
-        &.Title, &.Plot {
-          grid-column: auto / span 3;
-        }
-      }
-    }
-  }
-
-  @include grid-medium {
-    & {
-      grid-template-columns: repeat(2, 1fr);
-
-      &__item {
-        &.Title, &.Plot, &.Actors {
-          grid-column: auto / span 2;
-        }
-      }
-    }
-  }
-
-  @include grid-small {
-    & {
-      grid-template-columns: repeat(1, 1fr);
-    }
-
-    &__item {
-      &.Title, &.Plot, &.Actors {
-        grid-column: auto / span 1;
-      }
-    }
   }
 }
 

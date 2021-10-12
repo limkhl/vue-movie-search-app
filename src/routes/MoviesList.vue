@@ -74,27 +74,8 @@ export default {
 <style lang="scss" scoped>
 .list-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   grid-gap: 40px;
-
-  /* Media Query */
-  @include grid-large {
-    & {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  @include grid-medium {
-    & {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @include grid-small {
-    & {
-      grid-template-columns: repeat(1, 1fr);
-    }
-  }
 }
 
 .guide {

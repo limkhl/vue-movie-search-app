@@ -6,12 +6,6 @@
   }
 }
 
-@mixin grid-medium {
-  @media (max-width: #{$breakpoint-grid-medium}) {
-    @content;
-  }
-}
-
 @mixin grid-large {
   @media (max-width: #{$breakpoint-grid-large}) {
     @content;
