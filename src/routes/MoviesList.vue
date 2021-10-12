@@ -1,19 +1,5 @@
 <template>
-  <h2
-    v-show="isInit"
-    class="guide">
-    추천 검색어 <span>" {{ keyword }} "</span> (으)로 찾은 결과입니다.
-  </h2>
-  <h2
-    v-show="!isInit && hasResult"
-    class="guide">
-    <span>" {{ keyword }} "</span> (으)로 찾은 결과입니다.
-  </h2>
-  <h2
-    v-show="!isInit && !hasResult"
-    class="guide">
-    <span>" {{ keyword }} "</span> (으)로 찾은 결과가 없습니다.
-  </h2>
+  <StatusMessage :init-keyword="initKeyword" />
   <ul
     class="list-container">
     <MoviesItem
@@ -26,10 +12,12 @@
 
 <script>
 import MoviesItem from '~/components/MoviesItem'
+import StatusMessage from '~/components/StatusMessage'
 
 export default {
   components: {
-    MoviesItem
+    MoviesItem,
+    StatusMessage
   },
   data() {
     return {
@@ -37,18 +25,12 @@ export default {
     }
   },
   computed: {
-    isInit() {
-      return this.$store.state.movies.isInit
-    },
     keyword() {
       const { keyword } = this.$store.state.movies
       return keyword ?? this.initKeyword
     },
     movies() {
       return this.$store.state.movies.movies
-    },
-    hasResult() {
-      return this.movies && this.movies.length
     },
     totalResults() {
       return this.$store.state.movies.totalResults
@@ -78,7 +60,7 @@ export default {
       } else {
         await this.$store.dispatch('movies/searchMovies', { keyword: this.keyword })
       }
-
+      
       if (this.$route.fullPath === '/') {
         this.$router.push({
           name: 'MoviesList',

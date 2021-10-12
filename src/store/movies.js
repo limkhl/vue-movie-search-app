@@ -10,7 +10,10 @@ export default {
       loadings: [],
       imgNotFound: 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg',
       page: 1,
-      totalResults: 0
+      totalResults: 0,
+      typing: false,
+      isEmpty: false,
+      hasKorean: false
     }
   },
   getters: {
@@ -41,6 +44,15 @@ export default {
     },
     changePage(state, newPage) {
       state.page = newPage
+    },
+    changeTypingMode(state, bool) {
+      state.typing = bool
+    },
+    changeIsEmpty(state, bool) {
+      state.isEmpty = bool
+    },
+    changeHasKorean(state, bool) {
+      state.hasKorean = bool
     }
   },
   actions: {
