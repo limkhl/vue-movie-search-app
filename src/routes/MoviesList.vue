@@ -29,8 +29,7 @@ export default {
   },
   computed: {
     keyword() {
-      const { keyword } = this.$store.state.movies
-      return keyword ?? this.initKeyword
+      return this.$store.state.movies.keyword ?? this.initKeyword
     },
     movies() {
       return this.$store.state.movies.movies
@@ -43,32 +42,31 @@ export default {
     }
   },
   created() {
-    this.firstSearch()
-    this.checkTimingForInfinityScroll()
+    if (this.$route.query.keyword) {
+      this.$store.commit('movies/changeKeyword', this.$route.query.keyword)
+    } else {
+      this.$store.dispatch('movies/searchMovies', { keyword: this.keyword })
+    }
+
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
-    firstSearch() {
-      if (this.$route.query.keyword) {
-        this.$store.commit('movies/changeKeyword', this.$route.query.keyword)
-      } else {
-        this.$store.dispatch('movies/searchMovies', { keyword: this.keyword })
-      }
-    },
     infinityScroll() {
       if (!this.$store.getters['movies/loading']) {
         this.$store.commit('movies/changePage', this.$store.state.movies.page + 1)
         this.$store.dispatch('movies/fetchMoreMovies', { keyword: this.keyword })
       }
     },
-    checkTimingForInfinityScroll() {
-      window.addEventListener('scroll', () => {
-        const isScrollEnded = (window.innerHeight + window.scrollY) + 600 >= document.body.offsetHeight
-        
-        if (isScrollEnded && this.movies.length < this.totalResults && this.$route.name !== 'DetailPage') {
-          this.infinityScroll()
-        }
-      })
-    }
+    handleScroll() {
+      const isScrollEnded = (window.innerHeight + window.scrollY) + 600 >= document.body.offsetHeight
+      
+      if (isScrollEnded && this.movies.length < this.totalResults && this.$route.name !== 'DetailPage') {
+        this.infinityScroll()
+      }
+    },
   }
 }
 </script>
